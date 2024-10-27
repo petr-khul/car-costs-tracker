@@ -154,5 +154,77 @@
         "Previous_refuelling_missing": false,
         "Gas station": "Rosice",
         "Refuel note": "OK\n"
+    },
+    {
+        "Odometer status": 2800.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 40.0,
+        "Refuel total price": 1122.0,
+        "Price per liter": 28.05,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Rosice",
+        "Refuel note": "OK\n"
+    },
+    {
+        "Odometer status": 3200.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 30.0,
+        "Refuel total price": 1500.0,
+        "Price per liter": 50.0,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Brno",
+        "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 3800.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 40.0,
+        "Refuel total price": 1700.0,
+        "Price per liter": 42.5,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Praha",
+        "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 4500.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 55.0,
+        "Refuel total price": 1800.0,
+        "Price per liter": 32.72727272727273,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Ostrava",
+        "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 5500.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 60.0,
+        "Refuel total price": 2400.0,
+        "Price per liter": 40.0,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Brno",
+        "Refuel note": "OK\n"
+    },
+    {
+        "Odometer status": 6000.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 22.0,
+        "Refuel total price": 1000.0,
+        "Price per liter": 45.45454545454545,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Brno",
+        "Refuel note": "\n"
     }
 ]
