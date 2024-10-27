@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import tkinter
 from tkcalendar import *
-from datetime import date
+from datetime import date, datetime
 from general import *
 
 def new_tanking(content_frame):
@@ -14,28 +14,49 @@ def new_tanking(content_frame):
         tanking_history = load_tanking_history()
         last_refuel_stop = tanking_history[-1]
         last_odometer_status = last_refuel_stop["Odometer status"]
-        odometer_status = float(odometer_entry.get())
-        if odometer_status < last_odometer_status:
+        odometer_status = odometer_entry.get().strip()
+        if not odometer_status:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
+        elif float(odometer_status) < last_odometer_status:
             messagebox.showwarning("Invalid Input", "New odometer value cannot be lower than last one.")
             return
+        else:
+            odometer_status = float(odometer_status)
         fuel_type = selected_fuel_type.get()
-        fuel_amount = float(fuel_amount_entry.get())
-        refuel_total_price = float(refuel_price_entry.get())
-        price_per_liter = refuel_total_price/fuel_amount
+        if fuel_type == "Select the fuel type":
+            messagebox.showwarning("Missing input", "Please select valid fuel type")
+            return
+        fuel_amount = fuel_amount_entry.get().strip()
+        if not fuel_amount:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
+        else:
+            fuel_amount = float(fuel_amount)
+        refuel_total_price = refuel_price_entry.get()
+        if not refuel_total_price:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
+        else:
+            refuel_total_price = float(refuel_total_price)
+        price_per_liter = float(refuel_total_price)/float(fuel_amount)
         refuel_date = refuel_date_entry.get()
         tank_full_value = tank_full.get()
         previous_refuelling_missing_value = previous_refuelling_missing.get()
         gas_station = gas_station_entry.get()
+        if not gas_station:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
         refuel_note = refuel_note_entry.get("1.0", tkinter.END)
 
         #print(odometer_status, fuel_type, fuel_amount, refuel_price, refuel_date, tank_full_value, previous_refuelling_missing_value, gas_station, refuel_note)
 
         refuel_record = {
-            "Odometer status" : odometer_status, 
+            "Odometer status" : float(odometer_status), 
             "Fuel type" : fuel_type, 
-            "Fuel amount" : fuel_amount, 
-            "Refuel total price" : refuel_total_price,
-            "Price per liter" : price_per_liter, 
+            "Fuel amount" : float(fuel_amount), 
+            "Refuel total price" : float(refuel_total_price),
+            "Price per liter" : float(price_per_liter), 
             "Refuel date" : refuel_date, 
             "Tank full" : tank_full_value, 
             "Previous_refuelling_missing" : previous_refuelling_missing_value, 

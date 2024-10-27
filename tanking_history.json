@@ -58,5 +58,17 @@
         "Previous_refuelling_missing": false,
         "Gas station": "Zbysov",
         "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 13900.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 40.0,
+        "Refuel total price": 1700.0,
+        "Price per liter": 42.5,
+        "Refuel date": "19.9.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Rosice",
+        "Refuel note": "\n"
     }
 ]

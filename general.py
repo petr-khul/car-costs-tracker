@@ -1,8 +1,9 @@
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 import tkinter
 import json
 import os
 from statistics import *
+from datetime import datetime
 
 FONT_HEADER = ("Arial", 12, "bold")
 FONT_STANDARD_LABEL = ("Arial", 10, "bold")
@@ -65,11 +66,22 @@ def show_default(content_frame):
     last_fuel_price_value_label = tkinter.Label(content_frame, text = f"{get_last_fuel_price():.2f} CZK/l")
     last_fuel_price_value_label.grid(row=3, column=1, sticky = "e")
 
+    tanking_history = load_tanking_history()
+    last_refuel_stop = tanking_history[-1]
+    last_refuel_date = last_refuel_stop["Refuel date"]
+    last_refuel_date_label = tkinter.Label(content_frame, text = "Last refuel")
+    last_refuel_date_label.grid(row=4, column=0, sticky = "w")
+    last_refuel_date_value_label = tkinter.Label(content_frame, text = f"{last_refuel_date} ({get_date_diff(last_refuel_date)} days ago)")
+    last_refuel_date_value_label.grid(row=4, column=1, sticky = "e")
+
+    default_info_separator = ttk.Separator(content_frame, orient='horizontal')
+    default_info_separator.grid(row=5, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+
 def calcualate_last_consumption():
     tanking_history = load_tanking_history()
     last_refuel = tanking_history[-1]
     pre_last_refuel = tanking_history[-2]
-    last_fuel_consumption = (last_refuel["Fuel amount"]/(last_refuel["Odometer status"]-pre_last_refuel["Odometer status"])*100)
+    last_fuel_consumption = last_refuel["Fuel amount"]/((last_refuel["Odometer status"])-(pre_last_refuel["Odometer status"]))*100
     return last_fuel_consumption
     
 def calculate_avg_consumption():   
@@ -93,3 +105,12 @@ def get_last_fuel_price():
     last_refuel_stop = tanking_history[-1]
     last_refuel_price = last_refuel_stop["Price per liter"]
     return last_refuel_price
+
+def get_date_diff(initial_date):
+    date_format = "%d.%m.%Y"  # your date format
+    initial_date_obj = datetime.strptime(initial_date, date_format).date()  # Convert to date object
+    today = datetime.today().date()  # Get today's date
+
+    # Calculate the difference
+    date_difference = (today - initial_date_obj).days 
+    return date_difference
