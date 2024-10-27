@@ -4,7 +4,7 @@ from tkcalendar import *
 from datetime import date
 import json, os
 from tanking import new_tanking  # Assuming you have defined tanking-related functions
-from general import load_tanking_history, show_default, validate_decimal_input  # Import necessary functions
+from general import load_tanking_history, show_default, validate_decimal_input, BG_COLOR  # Import necessary functions
 from statistics import *
 
 tanking_history = load_tanking_history()
@@ -14,12 +14,14 @@ window = tkinter.Tk()
 window.title("Car Costs Tracker")
 window.geometry("400x500")
 
-content_frame = tkinter.Frame(window)
+content_frame = tkinter.Frame(window, bg = BG_COLOR)
 content_frame.grid(row=0, column=0, padx=10, pady=10)
+#content_frame.option_add("*Background", BG_COLOR) #sets the BG color to all widgets
 
 # Create a menu
 menu_bar = tkinter.Menu(window)
 window.config(menu=menu_bar)
+window.configure(bg = BG_COLOR)
 
 fuel_menu = tkinter.Menu(menu_bar, tearoff=0)
 fuel_menu.add_command(label="Add refuel", command=lambda: new_tanking(content_frame))  # Make sure new_tanking is defined in tanking.py

@@ -7,7 +7,7 @@ from statistics import *
 FONT_HEADER = ("Arial", 12, "bold")
 FONT_STANDARD_LABEL = ("Arial", 10, "bold")
 FONT_BASIC = ("Arial", 10)
-BG_COLOR = "#808080"
+BG_COLOR = "#f4f4f4"
 
 file_path = "tanking_history.json"
 
@@ -46,7 +46,7 @@ def clear_content(content_frame):
 
 def show_default(content_frame):
     clear_content(content_frame)
-    #tanking_history = load_tanking_history()
+
     default_fuel_label = tkinter.Label(content_frame, text = "Fuel overview", font = FONT_HEADER)
     default_fuel_label.grid(row=0, column=0, columnspan=2, sticky = "w")
     
@@ -60,15 +60,10 @@ def show_default(content_frame):
     avg_consumption_label = tkinter.Label(content_frame, text = f"{calculate_avg_consumption():.2f} l/km")
     avg_consumption_label.grid(row=2, column=1, sticky = "e")
 
-    #if tanking_history:  # Check if there are any entries
-        #last_refuel_stop = tanking_history[-1]
-        #last_refuel_stop_odometer = last_refuel_stop["Odometer status"]
-        #last_refuel_stop_odometer_label = tkinter.Label(content_frame, text=fuel_statitics)
-        #last_refuel_stop_odometer_label.grid(row=0, column=0)
-    #else:
-        # If no history, you can add a label indicating so
-        #no_data_label = tkinter.Label(content_frame, text="No tanking history available.")
-        #no_data_label.grid(row=0, column=0)
+    last_fuel_price_label = tkinter.Label(content_frame, text = "Last fuel price")
+    last_fuel_price_label.grid(row=3, column=0, sticky = "w")
+    last_fuel_price_value_label = tkinter.Label(content_frame, text = f"{get_last_fuel_price():.2f} CZK/l")
+    last_fuel_price_value_label.grid(row=3, column=1, sticky = "e")
 
 def calcualate_last_consumption():
     tanking_history = load_tanking_history()
@@ -92,3 +87,9 @@ def calculate_avg_consumption():
     
     avg_consumption = (total_liters/total_km)*100
     return avg_consumption
+
+def get_last_fuel_price():
+    tanking_history = load_tanking_history()
+    last_refuel_stop = tanking_history[-1]
+    last_refuel_price = last_refuel_stop["Price per liter"]
+    return last_refuel_price
