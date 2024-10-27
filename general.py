@@ -71,7 +71,7 @@ def show_default(content_frame):
     last_refuel_date = last_refuel_stop["Refuel date"]
     last_refuel_date_label = tkinter.Label(content_frame, text = "Last refuel")
     last_refuel_date_label.grid(row=4, column=0, sticky = "w")
-    last_refuel_date_value_label = tkinter.Label(content_frame, text = f"{last_refuel_date} ({get_date_diff(last_refuel_date)} days ago)")
+    last_refuel_date_value_label = tkinter.Label(content_frame, text = f"{last_refuel_date}\n({get_date_diff(last_refuel_date)} days ago)")
     last_refuel_date_value_label.grid(row=4, column=1, sticky = "e")
 
     default_info_separator = ttk.Separator(content_frame, orient='horizontal')
