@@ -6,8 +6,6 @@ from tkcalendar import *
 from datetime import date
 from general import *
 
-
-
 def new_tanking(content_frame):
     clear_content(content_frame) # Will refresh the window to enable new widgets
 
@@ -118,3 +116,7 @@ def new_tanking(content_frame):
 
     add_refuel_button = tkinter.Button(content_frame, text = "Add refuel stop", command = add_tanking_record, width = 25)
     add_refuel_button.grid(row = 10, column = 1, pady = 2, padx = 2)
+
+
+
+        
