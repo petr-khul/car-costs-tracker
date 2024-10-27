@@ -70,5 +70,17 @@
         "Previous_refuelling_missing": false,
         "Gas station": "Rosice",
         "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 14000.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 40.0,
+        "Refuel total price": 1800.0,
+        "Price per liter": 45.0,
+        "Refuel date": "27.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Brno",
+        "Refuel note": "\n"
     }
 ]
