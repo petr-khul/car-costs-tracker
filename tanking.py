@@ -40,9 +40,14 @@ def new_tanking(content_frame):
         else:
             refuel_total_price = float(refuel_total_price)
         price_per_liter = float(refuel_total_price)/float(fuel_amount)
+        
+        last_refuel_date = last_refuel_stop["Refuel date"]
         refuel_date = refuel_date_entry.get()
+        if refuel_date < last_refuel_date:
+            messagebox.showwarning("Invalid Input", "Cannot add new refuel with date before last refuel")
+            return
         tank_full_value = tank_full.get()
-        previous_refuelling_missing_value = previous_refuelling_missing.get()
+        #previous_refuelling_missing_value = previous_refuelling_missing.get()
         gas_station = gas_station_entry.get()
         if not gas_station:
             messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
@@ -59,7 +64,7 @@ def new_tanking(content_frame):
             "Price per liter" : float(price_per_liter), 
             "Refuel date" : refuel_date, 
             "Tank full" : tank_full_value, 
-            "Previous_refuelling_missing" : previous_refuelling_missing_value, 
+            #"Average consumption" : previous_refuelling_missing_value, 
             "Gas station" : gas_station, 
             "Refuel note" : refuel_note
         }
@@ -119,11 +124,11 @@ def new_tanking(content_frame):
     tank_full_checkbox = tkinter.Checkbutton(content_frame, text = "", variable = tank_full)
     tank_full_checkbox.grid(row = 6, column= 1, pady = 2, padx = 10, sticky = "w") 
 
-    previous_refuelling_missing_label = tkinter.Label(content_frame, text = "Previous missing", font = FONT_STANDARD_LABEL)
-    previous_refuelling_missing_label.grid(row = 7, column= 0, pady = 2, padx = 10, sticky = "w")
-    previous_refuelling_missing = tkinter.BooleanVar()
-    previous_refuelling_missing_checkbox = tkinter.Checkbutton(content_frame, text = "", variable = previous_refuelling_missing)
-    previous_refuelling_missing_checkbox.grid(row = 7, column= 1, pady = 2, padx = 10, sticky = "w") 
+    #previous_refuelling_missing_label = tkinter.Label(content_frame, text = "Previous missing", font = FONT_STANDARD_LABEL)
+    #previous_refuelling_missing_label.grid(row = 7, column= 0, pady = 2, padx = 10, sticky = "w")
+    #previous_refuelling_missing = tkinter.BooleanVar()
+    #previous_refuelling_missing_checkbox = tkinter.Checkbutton(content_frame, text = "", variable = previous_refuelling_missing)
+    #previous_refuelling_missing_checkbox.grid(row = 7, column= 1, pady = 2, padx = 10, sticky = "w") 
 
     gas_station_label = tkinter.Label(content_frame, text = "Gas station", font = FONT_STANDARD_LABEL)
     gas_station_label.grid(row = 8, column= 0, pady = 2, padx = 10, sticky = "w")
@@ -138,9 +143,10 @@ def new_tanking(content_frame):
     add_refuel_button = tkinter.Button(content_frame, text = "Add refuel stop", command = add_tanking_record, width = 25)
     add_refuel_button.grid(row = 10, column = 1, pady = 2, padx = 2)
 
-def display_refuel_log(content_frame, tanking_history):
+def display_refuel_log(content_frame):
         # Clear previous content
     clear_content(content_frame)
+    tanking_history = load_tanking_history()
     content_frame.pack_propagate(False)
 
     # Create a canvas and scrollbar
@@ -158,9 +164,9 @@ def display_refuel_log(content_frame, tanking_history):
     #inner_frame_id = canvas.create_window((0, 0), window=inner_frame, anchor="nw")
 
     # Populate the inner_frame with records
-    for index, record in enumerate(tanking_history):
+    for index, record in enumerate(reversed(tanking_history)):
         record_text = (
-            f"Record {index + 1}:\n"
+            f"Record {len(tanking_history) - index}:\n"
             f"Odometer Status: {record['Odometer status']}\n"
             f"Fuel Type: {record['Fuel type']}\n"
             f"Fuel Amount: {record['Fuel amount']}\n"

@@ -46,6 +46,7 @@ def clear_content(content_frame):
 
 def show_fuel_overview(content_frame):
     tanking_history = load_tanking_history()
+    last_refuel = tanking_history[-1]
 
     fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
     fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
@@ -63,6 +64,8 @@ def show_fuel_overview(content_frame):
     last_avg_consumption_label.grid(row=3, column=1, sticky = "e")
     if calcualate_last_consumption() <= calculate_avg_consumption():
         last_avg_consumption_label.config(fg = "green")
+    elif last_refuel["Tank full"] == False:
+        last_avg_consumption_label.config(text = "Unknown", fg = "grey")
     else: 
         last_avg_consumption_label.config(fg = "red")
 
@@ -104,17 +107,24 @@ def show_default(content_frame):
 
 def calcualate_last_consumption():
     tanking_history = load_tanking_history()
-    last_refuel = tanking_history[-1]
-    pre_last_refuel = tanking_history[-2]
-    last_fuel_consumption = last_refuel["Fuel amount"]/((last_refuel["Odometer status"])-(pre_last_refuel["Odometer status"]))*100
-    return last_fuel_consumption
+    if len(tanking_history) < 2:
+        last_refuel = {}
+    else:
+        last_refuel = tanking_history[-1]
+        pre_last_refuel = tanking_history[-2]
+    if "Tank full" in last_refuel:
+        if last_refuel["Tank full"] == False:
+            return None
+        else:
+            last_fuel_consumption = last_refuel["Fuel amount"]/((last_refuel["Odometer status"])-(pre_last_refuel["Odometer status"]))*100
+            return last_fuel_consumption
     
 def calculate_avg_consumption():   
     tanking_history = load_tanking_history()
     total_liters = 0
     #total_km = 0
     for refuel_stop in tanking_history:
-        if "Fuel amount" in refuel_stop:
+        if refuel_stop.get("Fuel amount"):    
             total_liters += refuel_stop["Fuel amount"]
     first_refuel_record = tanking_history[0]
     initial_km = first_refuel_record["Odometer status"]
@@ -122,9 +132,12 @@ def calculate_avg_consumption():
     current_km = latest_refuel_record["Odometer status"]
     total_km = current_km - initial_km
     
-    avg_consumption = (total_liters/total_km)*100
-    return avg_consumption
-
+    if total_km > 0:
+        avg_consumption = (total_liters/total_km)*100
+        return avg_consumption
+    else:
+        return 0
+    
 def get_last_fuel_price():
     tanking_history = load_tanking_history()
     last_refuel_stop = tanking_history[-1]

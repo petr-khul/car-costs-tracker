@@ -29,7 +29,7 @@ fuel_menu = tkinter.Menu(menu_bar, tearoff=0)
 menu_bar.add_command(label="Home", command = lambda: show_default(content_frame))
 fuel_menu.add_command(label="Add refuel", command=lambda: new_tanking(content_frame))  # Make sure new_tanking is defined in tanking.py
 fuel_menu.add_command(label="Fuel statistics", command = lambda: fuel_statistics_window(content_frame))
-fuel_menu.add_command(label="Fuel log", command = lambda: display_refuel_log(content_frame, tanking_history))
+fuel_menu.add_command(label="Fuel log", command = lambda: display_refuel_log(content_frame))
 menu_bar.add_cascade(label="Fuel", menu=fuel_menu)
 
 costs_menu = tkinter.Menu(menu_bar, tearoff=0)
