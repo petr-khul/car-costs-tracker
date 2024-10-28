@@ -94,5 +94,29 @@
         "Previous_refuelling_missing": false,
         "Gas station": "Brno",
         "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 15400.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 70.0,
+        "Refuel total price": 2000.0,
+        "Price per liter": 28.571428571428573,
+        "Refuel date": "28.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Brno",
+        "Refuel note": "\n"
+    },
+    {
+        "Odometer status": 16100.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 5.0,
+        "Refuel total price": 200.0,
+        "Price per liter": 40.0,
+        "Refuel date": "28.10.2024",
+        "Tank full": true,
+        "Previous_refuelling_missing": false,
+        "Gas station": "Zbysov",
+        "Refuel note": "\n"
     }
 ]

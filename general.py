@@ -47,18 +47,22 @@ def clear_content(content_frame):
 def show_fuel_overview(content_frame):
   
     fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
-    fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+    fuel_header_separator.grid(row=1, column=0, columnspan= 3, sticky="ew", padx=5, pady=5)
     
     last_avg_consumption_label = tkinter.Label(content_frame, text = "Last consumption")
     last_avg_consumption_label.grid(row=2, column=0, sticky = "w")
     last_avg_consumption_label = tkinter.Label(content_frame, text = f"{calcualate_last_consumption():.2f} l/100 km")
     last_avg_consumption_label.grid(row=2, column=1, sticky = "e")
+    if calcualate_last_consumption() <= calculate_avg_consumption():
+        last_avg_consumption_label.config(fg = "green")
+    else: 
+        last_avg_consumption_label.config(fg = "red")
 
     avg_consumption_label = tkinter.Label(content_frame, text = "Average consumption")
     avg_consumption_label.grid(row=3, column=0, sticky = "w")
     avg_consumption_label = tkinter.Label(content_frame, text = f"{calculate_avg_consumption():.2f} l/100 km")
     avg_consumption_label.grid(row=3, column=1, sticky = "e")
-
+ 
     tanking_history = load_tanking_history()
     last_refuel_stop = tanking_history[-1]
     last_refuel_date = last_refuel_stop["Refuel date"]
@@ -71,6 +75,11 @@ def show_fuel_overview(content_frame):
     last_fuel_price_label.grid(row=5, column=0, sticky = "w")
     last_fuel_price_value_label = tkinter.Label(content_frame, text = f"{get_last_fuel_price():.2f} CZK/l")
     last_fuel_price_value_label.grid(row=5, column=1, sticky = "e")
+    from fuel_statistics import calculate_average_fuel_price
+    if get_last_fuel_price() <= calculate_average_fuel_price():
+        last_fuel_price_value_label.config(fg = "green")
+    else: 
+        last_fuel_price_value_label.config(fg = "red")
 
 def show_default(content_frame):
     clear_content(content_frame)

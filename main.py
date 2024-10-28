@@ -13,6 +13,7 @@ tanking_history = load_tanking_history()
 window = tkinter.Tk()
 window.title("Car Costs Tracker")
 window.geometry("400x500")
+window.resizable(False, False)
 
 content_frame = tkinter.Frame(window, bg = BG_COLOR)
 content_frame.grid(row=0, column=0, padx=10, pady=10)
