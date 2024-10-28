@@ -6,6 +6,7 @@ import json, os
 from tanking import new_tanking  # Assuming you have defined tanking-related functions
 from general import load_tanking_history, show_default, validate_decimal_input, BG_COLOR  # Import necessary functions
 from fuel_statistics import *
+from costs import *
 
 tanking_history = load_tanking_history()
 
@@ -31,7 +32,7 @@ fuel_menu.add_command(label="Fuel statistics", command = lambda: fuel_statistics
 menu_bar.add_cascade(label="Fuel", menu=fuel_menu)
 
 costs_menu = tkinter.Menu(menu_bar, tearoff=0)
-costs_menu.add_command(label="New cost")
+costs_menu.add_command(label="Add cost", command = lambda: new_costs(content_frame))
 costs_menu.add_command(label="Cost statistics")
 menu_bar.add_cascade(label="Costs", menu=costs_menu)
 

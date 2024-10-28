@@ -4,8 +4,8 @@ import json
 import os
 from datetime import datetime
 
-FONT_HEADER = ("Arial", 12, "bold")
-FONT_STANDARD_LABEL = ("Arial", 10, "bold")
+FONT_HEADER = ("Arial", 10, "bold")
+FONT_STANDARD_LABEL = ("Arial", 10)
 FONT_BASIC = ("Arial", 10)
 BG_COLOR = "white"
 
