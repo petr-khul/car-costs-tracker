@@ -109,21 +109,21 @@ def fuel_statistics_window(content_frame):
     show_fuel_overview(content_frame)
 
     avg_fuel_price_label = tkinter.Label(content_frame, text = "Average fuel price")
-    avg_fuel_price_label.grid(row = 8, column = 0, sticky = "w")
+    avg_fuel_price_label.grid(row = 9, column = 0, sticky = "w")
     avg_fuel_price_value = tkinter.Label(content_frame, text = f"{calculate_average_fuel_price():.2f} CZK/l")
-    avg_fuel_price_value.grid(row = 8, column = 1, sticky = "e")
+    avg_fuel_price_value.grid(row = 9, column = 1, sticky = "e")
 
     max_fuel_price, min_fuel_price, max_refuel, min_refuel, max_refuel_price, min_refuel_price = get_max_min_fuel_values()
 
     max_fuel_price_label = tkinter.Label(content_frame, text = "Maximal fuel price")
-    max_fuel_price_label.grid(row = 9, column = 0, sticky = "w")
+    max_fuel_price_label.grid(row = 10, column = 0, sticky = "w")
     max_fuel_price_value = tkinter.Label(content_frame, text = f"{max_fuel_price:.2f} CZK/l")
-    max_fuel_price_value.grid(row = 9, column = 1, sticky = "e")
+    max_fuel_price_value.grid(row = 10, column = 1, sticky = "e")
 
     min_fuel_price_label = tkinter.Label(content_frame, text = "Minimum fuel price")
-    min_fuel_price_label.grid(row = 10, column = 0, sticky = "w")
+    min_fuel_price_label.grid(row = 11, column = 0, sticky = "w")
     min_fuel_price_value = tkinter.Label(content_frame, text = f"{min_fuel_price:.2f} CZK/l")
-    min_fuel_price_value.grid(row = 10, column = 1, sticky = "e")
+    min_fuel_price_value.grid(row = 11, column = 1, sticky = "e")
 
     fuel_separator = ttk.Separator(content_frame, orient='horizontal')
     fuel_separator.grid(row=13, column=0, columnspan = 3, sticky="ew", padx=5, pady=5)

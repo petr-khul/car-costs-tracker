@@ -17,7 +17,7 @@ window.resizable(False, False)
 
 content_frame = tkinter.Frame(window, bg = BG_COLOR)
 content_frame.grid(row=0, column=0, padx=10, pady=10)
-#content_frame.option_add("*Background", BG_COLOR) #sets the BG color to all widgets
+content_frame.option_add("*Background", BG_COLOR) #sets the BG color to all widgets
 
 # Create a menu
 menu_bar = tkinter.Menu(window)
