@@ -5,7 +5,7 @@ from datetime import date
 import json, os
 from tanking import new_tanking  # Assuming you have defined tanking-related functions
 from general import load_tanking_history, show_default, validate_decimal_input, BG_COLOR  # Import necessary functions
-from statistics import *
+from fuel_statistics import *
 
 tanking_history = load_tanking_history()
 
@@ -24,8 +24,9 @@ window.config(menu=menu_bar)
 window.configure(bg = BG_COLOR)
 
 fuel_menu = tkinter.Menu(menu_bar, tearoff=0)
+menu_bar.add_command(label="Home", command = lambda: show_default(content_frame))
 fuel_menu.add_command(label="Add refuel", command=lambda: new_tanking(content_frame))  # Make sure new_tanking is defined in tanking.py
-fuel_menu.add_command(label="Fuel statistics")
+fuel_menu.add_command(label="Fuel statistics", command = lambda: fuel_statistics_window(content_frame))
 menu_bar.add_cascade(label="Fuel", menu=fuel_menu)
 
 costs_menu = tkinter.Menu(menu_bar, tearoff=0)

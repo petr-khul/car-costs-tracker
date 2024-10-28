@@ -2,7 +2,6 @@ from tkinter import messagebox, ttk
 import tkinter
 import json
 import os
-from statistics import *
 from datetime import datetime
 
 FONT_HEADER = ("Arial", 12, "bold")
@@ -45,26 +44,20 @@ def clear_content(content_frame):
     for widget in content_frame.winfo_children():
         widget.destroy()
 
-def show_default(content_frame):
-    clear_content(content_frame)
-
-    default_fuel_label = tkinter.Label(content_frame, text = "Fuel overview", font = FONT_HEADER)
-    default_fuel_label.grid(row=0, column=0, columnspan=2, sticky = "w")
+def show_fuel_overview(content_frame):
+  
+    fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
+    fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
     
     last_avg_consumption_label = tkinter.Label(content_frame, text = "Last consumption")
-    last_avg_consumption_label.grid(row=1, column=0, sticky = "w")
-    last_avg_consumption_label = tkinter.Label(content_frame, text = f"{calcualate_last_consumption():.2f} l/km")
-    last_avg_consumption_label.grid(row=1, column=1, sticky = "e")
+    last_avg_consumption_label.grid(row=2, column=0, sticky = "w")
+    last_avg_consumption_label = tkinter.Label(content_frame, text = f"{calcualate_last_consumption():.2f} l/100 km")
+    last_avg_consumption_label.grid(row=2, column=1, sticky = "e")
 
     avg_consumption_label = tkinter.Label(content_frame, text = "Average consumption")
-    avg_consumption_label.grid(row=2, column=0, sticky = "w")
-    avg_consumption_label = tkinter.Label(content_frame, text = f"{calculate_avg_consumption():.2f} l/km")
-    avg_consumption_label.grid(row=2, column=1, sticky = "e")
-
-    last_fuel_price_label = tkinter.Label(content_frame, text = "Last fuel price")
-    last_fuel_price_label.grid(row=3, column=0, sticky = "w")
-    last_fuel_price_value_label = tkinter.Label(content_frame, text = f"{get_last_fuel_price():.2f} CZK/l")
-    last_fuel_price_value_label.grid(row=3, column=1, sticky = "e")
+    avg_consumption_label.grid(row=3, column=0, sticky = "w")
+    avg_consumption_label = tkinter.Label(content_frame, text = f"{calculate_avg_consumption():.2f} l/100 km")
+    avg_consumption_label.grid(row=3, column=1, sticky = "e")
 
     tanking_history = load_tanking_history()
     last_refuel_stop = tanking_history[-1]
@@ -72,10 +65,26 @@ def show_default(content_frame):
     last_refuel_date_label = tkinter.Label(content_frame, text = "Last refuel")
     last_refuel_date_label.grid(row=4, column=0, sticky = "w")
     last_refuel_date_value_label = tkinter.Label(content_frame, text = f"{last_refuel_date}\n({get_date_diff(last_refuel_date)} days ago)")
-    last_refuel_date_value_label.grid(row=4, column=1, sticky = "e")
+    last_refuel_date_value_label.grid(row=4, column = 1, sticky = "e")
 
+    last_fuel_price_label = tkinter.Label(content_frame, text = "Last fuel price")
+    last_fuel_price_label.grid(row=5, column=0, sticky = "w")
+    last_fuel_price_value_label = tkinter.Label(content_frame, text = f"{get_last_fuel_price():.2f} CZK/l")
+    last_fuel_price_value_label.grid(row=5, column=1, sticky = "e")
+
+def show_default(content_frame):
+    clear_content(content_frame)
+    
+    default_fuel_label = tkinter.Label(content_frame, text = "Fuel overview", font = FONT_HEADER)
+    default_fuel_label.grid(row=0, column=0, columnspan=2, sticky = "w")
+    show_fuel_overview(content_frame)
+
+    from fuel_statistics import fuel_statistics_window
+
+    show_detail_fuel_statistics_button = tkinter.Button(content_frame, text = "Show detail fuel statistics", command = lambda: fuel_statistics_window(content_frame))
+    show_detail_fuel_statistics_button.grid(row = 6, column = 1, pady = 2, padx = 2)
     default_info_separator = ttk.Separator(content_frame, orient='horizontal')
-    default_info_separator.grid(row=5, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+    default_info_separator.grid(row=7, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
 
 def calcualate_last_consumption():
     tanking_history = load_tanking_history()
