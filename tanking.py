@@ -138,6 +138,59 @@ def new_tanking(content_frame):
     add_refuel_button = tkinter.Button(content_frame, text = "Add refuel stop", command = add_tanking_record, width = 25)
     add_refuel_button.grid(row = 10, column = 1, pady = 2, padx = 2)
 
+def display_refuel_log(content_frame, tanking_history):
+        # Clear previous content
+    clear_content(content_frame)
+    content_frame.pack_propagate(False)
+
+    # Create a canvas and scrollbar
+    canvas = tkinter.Canvas(content_frame, width = 350)
+    scrollbar = ttk.Scrollbar(content_frame, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    # Pack canvas and scrollbar
+    canvas.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=True)
+    scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+
+    # Create an inner frame to hold all the records
+    inner_frame = tkinter.Frame(canvas)
+    canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+    #inner_frame_id = canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+
+    # Populate the inner_frame with records
+    for index, record in enumerate(tanking_history):
+        record_text = (
+            f"Record {index + 1}:\n"
+            f"Odometer Status: {record['Odometer status']}\n"
+            f"Fuel Type: {record['Fuel type']}\n"
+            f"Fuel Amount: {record['Fuel amount']}\n"
+            f"Refuel Total Price: {record['Refuel total price']}\n"
+            f"Price Per Liter: {record['Price per liter']:.2f}\n"
+            f"Refuel Date: {record['Refuel date']}\n"
+            f"Tank Full: {'Yes' if record['Tank full'] else 'No'}\n"
+            f"Gas Station: {record['Gas station']}\n"
+            f"Refuel Note: {record['Refuel note'].strip()}\n"
+        )
+        record_frame = tkinter.Frame(inner_frame)
+        record_frame.pack(anchor="w", padx=10, pady=5, fill=tkinter.X)
+
+        label = tkinter.Label(record_frame, text=record_text, justify="left", anchor="w")
+        label.pack(side=tkinter.LEFT, padx=5)
+
+    # Update the canvas scroll region after adding all records
+    def update_scroll_region(event=None):
+        canvas.configure(scrollregion=canvas.bbox("all"))
+
+    # Bind the Configure event to update scroll region on inner_frame resizing
+    inner_frame.bind("<Configure>", update_scroll_region)
+    # Function to handle mouse wheel scrolling
+    def on_mouse_wheel(event):
+        canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+
+# Bind the mouse wheel event to the canvas
+    canvas.bind_all("<MouseWheel>", on_mouse_wheel)
+
+   
 
 
         

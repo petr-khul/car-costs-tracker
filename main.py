@@ -3,7 +3,7 @@ from tkinter import Menu, messagebox, ttk
 from tkcalendar import *
 from datetime import date
 import json, os
-from tanking import new_tanking  # Assuming you have defined tanking-related functions
+from tanking import new_tanking, display_refuel_log  # Assuming you have defined tanking-related functions
 from general import load_tanking_history, show_default, validate_decimal_input, BG_COLOR  # Import necessary functions
 from fuel_statistics import *
 from costs import *
@@ -17,7 +17,7 @@ window.geometry("400x500")
 window.resizable(False, False)
 
 content_frame = tkinter.Frame(window, bg = BG_COLOR)
-content_frame.grid(row=0, column=0, padx=10, pady=10)
+content_frame.pack(fill=tkinter.BOTH, expand=True, pady = 10, padx = 10)
 content_frame.option_add("*Background", BG_COLOR) #sets the BG color to all widgets
 
 # Create a menu
@@ -29,6 +29,7 @@ fuel_menu = tkinter.Menu(menu_bar, tearoff=0)
 menu_bar.add_command(label="Home", command = lambda: show_default(content_frame))
 fuel_menu.add_command(label="Add refuel", command=lambda: new_tanking(content_frame))  # Make sure new_tanking is defined in tanking.py
 fuel_menu.add_command(label="Fuel statistics", command = lambda: fuel_statistics_window(content_frame))
+fuel_menu.add_command(label="Fuel log", command = lambda: display_refuel_log(content_frame, tanking_history))
 menu_bar.add_cascade(label="Fuel", menu=fuel_menu)
 
 costs_menu = tkinter.Menu(menu_bar, tearoff=0)
