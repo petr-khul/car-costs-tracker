@@ -1,5 +1,13 @@
 [
     {
+        "Odometer status": 3000.0,
+        "Cost type": "Other",
+        "Cost clarification": "Wunderbaum",
+        "Price": 15.0,
+        "Cost date": "29.10.2024",
+        "Cost note": "\n"
+    },
+    {
         "Odometer status": 6000.0,
         "Fuel type": "Natural 95",
         "Fuel amount": 22.0,

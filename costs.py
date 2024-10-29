@@ -9,7 +9,46 @@ def new_costs(content_frame):
     clear_content(content_frame)
 
     def add_cost():
-        pass
+        costs_history = load_costs_history()
+       
+        cost_type = selected_cost_type.get()
+        if cost_type == "Select the cost type":
+            messagebox.showwarning("Missing input", "Please select valid cost type")
+            return
+        
+        cost_clarification = cost_clarification_entry.get().strip()
+        if not cost_clarification:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
+        
+        cost_price = cost_price_entry.get().strip()
+        if not cost_price:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
+        
+        cost_odometer = cost_odometer_entry.get().strip()
+        if not cost_odometer:
+            messagebox.showwarning("Invalid Input", "All required fields needs to be filled")
+            return
+        else:
+            cost_odometer = float(cost_odometer)
+
+        cost_date = cost_date_entry.get()
+
+        cost_note = cost_note_entry.get("1.0", tkinter.END)
+
+        cost_record = {
+            "Odometer status" : float(cost_odometer), 
+            "Cost type" : cost_type, 
+            "Cost clarification" : cost_clarification,
+            "Price" : float(cost_price),
+            "Cost date" : cost_date, 
+            "Cost note" : cost_note
+        }
+
+        append_costs_history(cost_record)
+        show_default(content_frame)
+
 
     vcmd = (content_frame.register(validate_decimal_input), '%P') #register form validation function
 
@@ -51,5 +90,5 @@ def new_costs(content_frame):
     cost_note_entry = tkinter.Text(content_frame, width = 25, font = FONT_BASIC, height = 5, wrap = "word")
     cost_note_entry.grid(row = 6, column = 1, pady = 2, padx = 2)
 
-    add_refuel_button = tkinter.Button(content_frame, text = "Add refuel stop", command = add_cost, width = 25)
+    add_refuel_button = tkinter.Button(content_frame, text = "Add cost", command = add_cost, width = 25)
     add_refuel_button.grid(row = 7, column = 1, pady = 2, padx = 2)

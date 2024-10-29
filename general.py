@@ -10,7 +10,32 @@ FONT_BASIC = ("Arial", 10)
 BG_COLOR = "white"
 
 file_path = "tanking_history.json"
+file_path_costs = "costs_history.json"
 
+# -------------- Handling costs history file -----------------------
+def save_costs_history(costs_history):
+    with open(file_path_costs, 'w') as f2:
+        json.dump(costs_history, f2, indent=4)
+
+def load_costs_history():
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as f:
+            try:
+                data = json.load(f)
+                # Sort the list of entries by 'Odometer status'
+                data.sort(key=lambda x: x['Odometer status'])
+                return data
+            except json.JSONDecodeError:
+                print("Warning: file is empty or has invalid JSON, returning an empty list.")
+                return []
+
+def append_costs_history(new_cost_entry):
+    data = load_costs_history()  # Load existing data
+    data.append(new_cost_entry)  # Append the new entry
+    data.sort(key=lambda x: x['Odometer status'])
+    save_costs_history(data)  # Save sorted data
+
+# -------------- Handling tanking history file -----------------------
 def save_tanking_history(tanking_history):
     with open(file_path, 'w') as f:
         json.dump(tanking_history, f, indent=4)
@@ -18,13 +43,18 @@ def save_tanking_history(tanking_history):
 def load_tanking_history():
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
-            return json.load(f)
-    return []  # Return an empty list if the file does not exist
+            try:
+                data = json.load(f)
+                return data
+            except json.JSONDecodeError:
+                #messagebox.showerror("Unable to load data", "Unable to load data from tanking history! :(")
+                return []  # Return an empty list if the file does not exist
 
 def append_tanking_history(new_entry):
     data = load_tanking_history()  # Load existing data
     data.append(new_entry)  # Append the new entry
     save_tanking_history(data)  # Save updated data
+
 
 def validate_decimal_input(P):
     # Allow only empty input (for when the entry is cleared)
@@ -46,12 +76,14 @@ def clear_content(content_frame):
 
 def show_fuel_overview(content_frame):
     tanking_history = load_tanking_history()
-    last_refuel = tanking_history[-1]
-
+    if tanking_history:
+        last_refuel = tanking_history[-1]
+    else:
+        print("No refuel history available")
     fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
     fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
 
-    last_refuel = tanking_history[-1]
+    #last_refuel = tanking_history[-1]
     last_odometer_status = last_refuel["Odometer status"]
     last_odometer_status_label = tkinter.Label(content_frame, text="Last odometer status")
     last_odometer_status_label.grid(row = 2, column = 0, sticky = "w")
