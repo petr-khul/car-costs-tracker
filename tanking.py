@@ -143,6 +143,15 @@ def new_tanking(content_frame):
     add_refuel_button = tkinter.Button(content_frame, text = "Add refuel stop", command = add_tanking_record, width = 25)
     add_refuel_button.grid(row = 10, column = 1, pady = 2, padx = 2)
 
+def delete_last_record(content_frame):
+    # Load the current tanking history
+    tanking_history = load_tanking_history()
+    # Remove the last entry if there are any records
+    if tanking_history:
+        tanking_history.pop()
+        save_tanking_history(tanking_history)  # Save the updated history after deletion
+        display_refuel_log(content_frame)  # Refresh the display after deletion
+
 def display_refuel_log(content_frame):
         # Clear previous content
     clear_content(content_frame)
@@ -182,6 +191,10 @@ def display_refuel_log(content_frame):
 
         label = tkinter.Label(record_frame, text=record_text, justify="left", anchor="w")
         label.pack(side=tkinter.LEFT, padx=5)
+
+        if index == 0:  # The first record in reversed(tanking_history) is the last record in the original order
+            delete_button = tkinter.Button(record_frame, text="Delete", command=lambda: delete_last_record(content_frame))
+            delete_button.pack(side=tkinter.RIGHT, padx=5)
 
     # Update the canvas scroll region after adding all records
     def update_scroll_region(event=None):
