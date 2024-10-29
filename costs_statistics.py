@@ -44,13 +44,17 @@ def costs_statistics_window(content_frame):
     costs_this_year_value = tkinter.Label(content_frame, text = f"{calculate_costs_this_year():.2f} CZK")
     costs_this_year_value.grid(row = 3, column = 1, sticky = "e")
 
-    selected_cost_filter = tkinter.StringVar()
+    costs_filter_separator = ttk.Separator(content_frame, orient='horizontal')
+    costs_filter_separator.grid(row=4, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+
+    selected_cost_filter = tkinter.StringVar(value = "Select a cost_type")
     cost_type_filter = []
     for record in costs_history:
         if len(costs_history) > 0:    
-            cost_type_filter.append(record["Cost type"])
+            cost_type_filter.append(record["Cost type"]) # will append all cost types from the list
         else: 
             cost_type_filter[0] = "No records found"
+    cost_type_filter = list(set(cost_type_filter)) # to remove duplicates
         
     costs_filter_dropdown = tkinter.OptionMenu(content_frame, selected_cost_filter, *cost_type_filter)
     costs_filter_dropdown.config(width = 15)
