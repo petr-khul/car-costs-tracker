@@ -5,9 +5,10 @@ from tkcalendar import *
 from datetime import date, datetime
 from general import *
 
-tanking_history = load_tanking_history()
-refuel_count = len(tanking_history)
+tanking_history = load_tanking_history() # load history from json file to the list of dictionaries
+refuel_count = len(tanking_history) #get number of records
 
+# Sum of the fuel price from all records
 def get_total_fuel_price():
     total_fuel_costs = 0
     for record in tanking_history:
@@ -67,9 +68,7 @@ def calculate_average_fuel_price():
     total_fuel_price = 0
     total_liters = 0
     first_record = tanking_history[0]
-    initial_odometer = first_record["Odometer status"]
     last_record = tanking_history[-1]
-    current_odometer = last_record["Odometer status"]
 
     for record in tanking_history:
         total_fuel_price += record["Refuel total price"]

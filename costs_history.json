@@ -8,36 +8,11 @@
         "Cost note": "\n"
     },
     {
-        "Odometer status": 6000.0,
-        "Fuel type": "Natural 95",
-        "Fuel amount": 22.0,
-        "Refuel total price": 1000.0,
-        "Price per liter": 45.45454545454545,
-        "Refuel date": "26.9.2024",
-        "Tank full": true,
-        "Gas station": "Brno",
-        "Refuel note": "\n"
-    },
-    {
-        "Odometer status": 7000.0,
-        "Fuel type": "Natural 95",
-        "Fuel amount": 22.0,
-        "Refuel total price": 1000.0,
-        "Price per liter": 45.45454545454545,
-        "Refuel date": "23.10.2024",
-        "Tank full": true,
-        "Gas station": "Brno",
-        "Refuel note": "\n"
-    },
-    {
-        "Odometer status": 7465.0,
-        "Fuel type": "Natural 95",
-        "Fuel amount": 32.9,
-        "Refuel total price": 1458.0,
-        "Price per liter": 44.3161094224924,
-        "Refuel date": "24.10.2024",
-        "Tank full": true,
-        "Gas station": "Brno",
-        "Refuel note": "\n"
+        "Odometer status": 11000.0,
+        "Cost type": "Maintenance",
+        "Cost clarification": "Tires",
+        "Price": 3000.0,
+        "Cost date": "29.10.2023",
+        "Cost note": "\n"
     }
 ]

@@ -18,10 +18,10 @@ def save_costs_history(costs_history):
         json.dump(costs_history, f2, indent=4)
 
 def load_costs_history():
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as f:
+    if os.path.exists(file_path_costs):
+        with open(file_path_costs, 'r') as f2:
             try:
-                data = json.load(f)
+                data = json.load(f2)
                 # Sort the list of entries by 'Odometer status'
                 data.sort(key=lambda x: x['Odometer status'])
                 return data
@@ -69,11 +69,13 @@ def validate_decimal_input(P):
         messagebox.showwarning("Invalid Input", "Please enter a valid number.\nWhen entering decimal number, use '.'")
         return False
 
+# function to remove all widget to refresh the window
 def clear_content(content_frame):
     # Clears content of the current window
     for widget in content_frame.winfo_children():
         widget.destroy()
 
+# window for showing fuel overview
 def show_fuel_overview(content_frame):
     tanking_history = load_tanking_history()
     if tanking_history:
@@ -123,6 +125,7 @@ def show_fuel_overview(content_frame):
     else: 
         last_fuel_price_value_label.config(fg = "red")
 
+# function to show default content
 def show_default(content_frame):
     clear_content(content_frame)
     
@@ -146,7 +149,7 @@ def calcualate_last_consumption():
         pre_last_refuel = tanking_history[-2]
     if "Tank full" in last_refuel:
         if last_refuel["Tank full"] == False:
-            return None
+            return 0
         else:
             last_fuel_consumption = last_refuel["Fuel amount"]/((last_refuel["Odometer status"])-(pre_last_refuel["Odometer status"]))*100
             return last_fuel_consumption
