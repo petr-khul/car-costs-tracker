@@ -23,6 +23,7 @@ def calculate_costs_this_year():
             this_year_costs_sum += record["Price"]
     return this_year_costs_sum
 
+
 def costs_statistics_window(content_frame):
     clear_content(content_frame)
     calculate_total_costs() # to refresh the label content everytime when window is being shown
@@ -74,17 +75,25 @@ def costs_statistics_window(content_frame):
     costs_year_filter_dropdown.grid(row = 8, column = 1, pady = 2, padx = 2)
 
     filter_statistics_button = tkinter.Button(content_frame, text = "Filter", 
-                                              command = lambda: display_costs_log(content_frame, selected_cost_filter.get(), selected_cost_year_filter.get()))
+                                              command = lambda: display_costs_log(content_frame, selected_cost_filter.get(), selected_cost_year_filter.get(), filtered_costs_value))
     filter_statistics_button.grid(row = 8, column = 2, pady = 2, padx = 2)
 
-    display_costs_log(content_frame, "All cost types", "All years")
+    filtered_costs_label = tkinter.Label(content_frame, text = "Total filtered costs")
+    filtered_costs_label.grid(row = 10, column = 0, sticky = "w")
+    filtered_costs_value = tkinter.Label(content_frame, text = f"{calculate_total_costs():.2f} CZK")
+    filtered_costs_value.grid(row = 10, column = 1, sticky = "e")
 
+    display_costs_log(content_frame, "All cost types", "All years", filtered_costs_value)
 
-def display_costs_log(content_frame, cost_type, year):
+def show_filtered_costs_label(filtered_costs_total, filtered_costs_value):
+    filtered_costs_value.config(text = f"{filtered_costs_total} CZK")
+
+def display_costs_log(content_frame, cost_type, year, filtered_costs_value):
     # Clear previous content
     #clear_content(content_frame)
     cost_type = cost_type
     year = year
+    filtered_costs_total = 0
 
     costs_history = load_costs_history()
     filtered_costs_history = []
@@ -94,16 +103,21 @@ def display_costs_log(content_frame, cost_type, year):
         for record in costs_history:
             if record["Cost type"] == cost_type:  # Check if the cost type matches
                 filtered_costs_history.append(record)  # Append the entire record
+                filtered_costs_total += record["Price"]
     elif cost_type == "All cost types" and year != "All years":
         for record in costs_history:
             cost_date = datetime.strptime(record["Cost date"], "%d.%m.%Y")  # Parse the cost date
             if cost_date.year == int(year):  # Check if the year matches
                 filtered_costs_history.append(record)  # Append the entire record
+                filtered_costs_total += record["Price"]
     elif cost_type != "All cost types" and year != "All years":
         for record in costs_history:
             cost_date = datetime.strptime(record["Cost date"], "%d.%m.%Y")  # Parse the cost date
             if record["Cost type"] == cost_type and cost_date.year == int(year):  # Check both conditions
                 filtered_costs_history.append(record)  # Append the entire record
+                filtered_costs_total += record["Price"]
+    
+    show_filtered_costs_label(filtered_costs_total, filtered_costs_value)
 
 
     content_frame.pack_propagate(False)
@@ -157,6 +171,7 @@ def display_costs_log(content_frame, cost_type, year):
 
     # Bind the mouse wheel event to the canvas
     canvas.bind_all("<MouseWheel>", on_mouse_wheel)
+
 
 def delete_record(record, content_frame):
     # Load current costs history
