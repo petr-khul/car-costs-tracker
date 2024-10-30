@@ -73,15 +73,39 @@ def costs_statistics_window(content_frame):
     costs_year_filter_dropdown.config(width = 10)
     costs_year_filter_dropdown.grid(row = 8, column = 1, pady = 2, padx = 2)
 
-    filter_statistics_button = tkinter.Button(content_frame, text = "Filter")
+    filter_statistics_button = tkinter.Button(content_frame, text = "Filter", 
+                                              command = lambda: display_costs_log(content_frame, selected_cost_filter.get(), selected_cost_year_filter.get()))
     filter_statistics_button.grid(row = 8, column = 2, pady = 2, padx = 2)
 
-    display_costs_log(content_frame)
+    display_costs_log(content_frame, "All cost types", "All years")
 
-def display_costs_log(content_frame):
-        # Clear previous content
+
+def display_costs_log(content_frame, cost_type, year):
+    # Clear previous content
     #clear_content(content_frame)
+    cost_type = cost_type
+    year = year
+
     costs_history = load_costs_history()
+    filtered_costs_history = []
+    if cost_type == "All cost types" and year == "All years":
+        filtered_costs_history = costs_history
+    elif cost_type != "All cost types" and year == "All years":
+        for record in costs_history:
+            if record["Cost type"] == cost_type:  # Check if the cost type matches
+                filtered_costs_history.append(record)  # Append the entire record
+    elif cost_type == "All cost types" and year != "All years":
+        for record in costs_history:
+            cost_date = datetime.strptime(record["Cost date"], "%d.%m.%Y")  # Parse the cost date
+            if cost_date.year == int(year):  # Check if the year matches
+                filtered_costs_history.append(record)  # Append the entire record
+    elif cost_type != "All cost types" and year != "All years":
+        for record in costs_history:
+            cost_date = datetime.strptime(record["Cost date"], "%d.%m.%Y")  # Parse the cost date
+            if record["Cost type"] == cost_type and cost_date.year == int(year):  # Check both conditions
+                filtered_costs_history.append(record)  # Append the entire record
+
+
     content_frame.pack_propagate(False)
 
     # Create a canvas and scrollbar
@@ -101,7 +125,7 @@ def display_costs_log(content_frame):
     #inner_frame_id = canvas.create_window((0, 0), window=inner_frame, anchor="nw")
 
     # Populate the inner_frame with records
-    for index, record in enumerate(reversed(costs_history)):
+    for index, record in enumerate(reversed(filtered_costs_history)):
         record_text = (
             f"Record {len(costs_history) - index}:\n"
             f"Odometer Status: {record['Odometer status']}\n"
@@ -117,9 +141,9 @@ def display_costs_log(content_frame):
         label = tkinter.Label(record_frame, text=record_text, justify="left", anchor="w")
         label.pack(side=tkinter.LEFT, padx=5)
 
-        if index == 0:  # The first record in reversed(tanking_history) is the last record in the original order
-            delete_button = tkinter.Button(record_frame, text="Delete", command=lambda: delete_last_record(content_frame))
-            delete_button.pack(side=tkinter.RIGHT, padx=5)
+        # Create a delete button for each record
+        delete_button = tkinter.Button(record_frame, text="Delete", command=lambda r=record: delete_record(r, content_frame))
+        delete_button.pack(side=tkinter.RIGHT, padx=5)
 
     # Update the canvas scroll region after adding all records
     def update_scroll_region(event=None):
@@ -133,3 +157,17 @@ def display_costs_log(content_frame):
 
     # Bind the mouse wheel event to the canvas
     canvas.bind_all("<MouseWheel>", on_mouse_wheel)
+
+def delete_record(record, content_frame):
+    # Load current costs history
+    costs_history = load_costs_history()
+
+    # Remove the record from the history
+    costs_history.remove(record)
+
+    # Save the updated costs history back to the JSON file
+    with open(file_path_costs, 'w') as f:
+        json.dump(costs_history, f, indent=4)
+
+    # Refresh the display to reflect the deletion
+    display_costs_log(content_frame, "All cost types", "All years") 
