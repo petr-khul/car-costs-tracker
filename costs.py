@@ -55,7 +55,7 @@ def new_costs(content_frame):
     new_cost_label = tkinter.Label(content_frame, text = "ADD NEW COSTS", font = FONT_HEADER)
     new_cost_label.grid(row = 0, column = 0, columnspan = 2, sticky = "w", padx = 10, pady = 10)
 
-    cost_type_dropdown_options = ["Service", "Maintenance", "Parking", "Wash", "Sanction", "Insurance", "Tuning", "Other"]
+    cost_type_dropdown_options = ["Service", "Maintenance", "Parking", "Vignette", "Wash", "Sanction", "Insurance", "Tuning", "Other"]
     cost_type_label = tkinter.Label(content_frame, text = "Cost type", font = FONT_STANDARD_LABEL)
     cost_type_label.grid(row = 1, column= 0, pady = 2, padx = 10, sticky = "w")
     selected_cost_type = tkinter.StringVar()

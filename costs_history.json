@@ -1,26 +1,90 @@
 [
     {
-        "Odometer status": 1000.0,
-        "Cost type": "Tuning",
-        "Cost clarification": "LED underlight",
-        "Price": 2222.0,
-        "Cost date": "08.10.2021",
+        "Odometer status": 53500.0,
+        "Cost type": "Insurance",
+        "Cost clarification": "Yearly insurance",
+        "Price": 18751.0,
+        "Cost date": "27.09.2022",
         "Cost note": "\n"
     },
     {
-        "Odometer status": 3000.0,
-        "Cost type": "Other",
-        "Cost clarification": "Wunderbaum",
-        "Price": 15.0,
-        "Cost date": "29.10.2024",
+        "Odometer status": 53800.0,
+        "Cost type": "Vignette",
+        "Cost clarification": "CZ Vignette",
+        "Price": 1500.0,
+        "Cost date": "30.09.2022",
         "Cost note": "\n"
     },
     {
-        "Odometer status": 12000.0,
+        "Odometer status": 56800.0,
         "Cost type": "Maintenance",
-        "Cost clarification": "Tires",
-        "Price": 3000.0,
-        "Cost date": "29.10.2023",
+        "Cost clarification": "Regular service",
+        "Price": 10004.0,
+        "Cost date": "09.12.2022",
+        "Cost note": "Regular yearly service 15tkm\n"
+    },
+    {
+        "Odometer status": 63200.0,
+        "Cost type": "Vignette",
+        "Cost clarification": "AT Vignette",
+        "Price": 240.0,
+        "Cost date": "22.04.2023",
+        "Cost note": "Trip to Budapest\n"
+    },
+    {
+        "Odometer status": 63200.0,
+        "Cost type": "Vignette",
+        "Cost clarification": "HU Vignette",
+        "Price": 535.0,
+        "Cost date": "22.04.2023",
+        "Cost note": "Trip to Budapest\n"
+    },
+    {
+        "Odometer status": 64600.0,
+        "Cost type": "Maintenance",
+        "Cost clarification": "Letni pneu + prezuti",
+        "Price": 10300.0,
+        "Cost date": "10.05.2023",
+        "Cost note": "New summer tires + work\nTires Continental\n"
+    },
+    {
+        "Odometer status": 70000.0,
+        "Cost type": "Insurance",
+        "Cost clarification": "Yearly insurance",
+        "Price": 18992.0,
+        "Cost date": "08.09.2023",
         "Cost note": "\n"
+    },
+    {
+        "Odometer status": 70100.0,
+        "Cost type": "Insurance",
+        "Cost clarification": "Havarijni pojisteni",
+        "Price": 18992.0,
+        "Cost date": "30.10.2024",
+        "Cost note": "\n"
+    },
+    {
+        "Odometer status": 71948.0,
+        "Cost type": "Maintenance",
+        "Cost clarification": "Pravidelny servis",
+        "Price": 9351.0,
+        "Cost date": "23.10.2023",
+        "Cost note": "\n"
+    },
+    {
+        "Odometer status": 86300.0,
+        "Cost type": "Maintenance",
+        "Cost clarification": "New winter tires",
+        "Price": 9708.0,
+        "Cost date": "13.10.2024",
+        "Cost note": "\n"
+    },
+    {
+        "Odometer status": 86800.0,
+        "Cost type": "Maintenance",
+        "Cost clarification": "Regular yearly service",
+        "Price": 10091.0,
+        "Cost date": "21.10.2024",
+        "Cost note": "Regular service,\ntires change, new brakes rear\n"
     }
 ]
