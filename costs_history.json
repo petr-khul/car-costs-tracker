@@ -1,5 +1,13 @@
 [
     {
+        "Odometer status": 1000.0,
+        "Cost type": "Tuning",
+        "Cost clarification": "LED underlight",
+        "Price": 2222.0,
+        "Cost date": "08.10.2021",
+        "Cost note": "\n"
+    },
+    {
         "Odometer status": 3000.0,
         "Cost type": "Other",
         "Cost clarification": "Wunderbaum",
@@ -8,16 +16,15 @@
         "Cost note": "\n"
     },
     {
-        "Odometer status": 12000.0,
+        "Odometer status": 11000.0,
         "Cost type": "Maintenance",
         "Cost clarification": "Tires",
         "Price": 3000.0,
         "Cost date": "29.10.2023",
         "Cost note": "\n"
-    }
-    ,
+    },
     {
-        "Odometer status": 11000.0,
+        "Odometer status": 12000.0,
         "Cost type": "Maintenance",
         "Cost clarification": "Tires",
         "Price": 3000.0,

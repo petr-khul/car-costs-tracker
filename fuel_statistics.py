@@ -6,7 +6,10 @@ from datetime import date, datetime
 from general import *
 
 tanking_history = load_tanking_history() # load history from json file to the list of dictionaries
-refuel_count = len(tanking_history) #get number of records
+if isinstance(tanking_history, list):
+    refuel_count = len(tanking_history)
+else:
+    print(f"Unexpected type: {type(tanking_history)}")
 
 # Sum of the fuel price from all records
 def get_total_fuel_price():

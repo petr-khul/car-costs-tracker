@@ -28,6 +28,7 @@ def load_costs_history():
             except json.JSONDecodeError:
                 print("Warning: file is empty or has invalid JSON, returning an empty list.")
                 return []
+    return []        
 
 def append_costs_history(new_cost_entry):
     data = load_costs_history()  # Load existing data
@@ -49,6 +50,7 @@ def load_tanking_history():
             except json.JSONDecodeError:
                 #messagebox.showerror("Unable to load data", "Unable to load data from tanking history! :(")
                 return []  # Return an empty list if the file does not exist
+    return []
 
 def append_tanking_history(new_entry):
     data = load_tanking_history()  # Load existing data
@@ -85,7 +87,7 @@ def show_fuel_overview(content_frame):
     fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
     fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
 
-    #last_refuel = tanking_history[-1]
+    last_refuel = tanking_history[-1]
     last_odometer_status = last_refuel["Odometer status"]
     last_odometer_status_label = tkinter.Label(content_frame, text="Last odometer status")
     last_odometer_status_label.grid(row = 2, column = 0, sticky = "w")

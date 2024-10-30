@@ -21,4 +21,16 @@
         "Gas station": "Brno",
         "Refuel note": "\n"
     }
+    ,
+    {
+        "Odometer status": 8000.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 22.0,
+        "Refuel total price": 2000,
+        "Price per liter": 45.45454545454545,
+        "Refuel date": "24.10.2024",
+        "Tank full": true,
+        "Gas station": "Brno",
+        "Refuel note": "\n"
+    }
 ]
