@@ -8,7 +8,7 @@ from fuel_statistics import *
 from costs_statistics import *
 from costs import *
 
-tanking_history = load_tanking_history()
+tanking_history = load_tanking_history() # load the history from json file
 
 # Create the main window
 window = tkinter.Tk()

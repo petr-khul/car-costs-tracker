@@ -57,9 +57,7 @@ def append_tanking_history(new_entry):
     data.append(new_entry)  # Append the new entry
     save_tanking_history(data)  # Save updated data
 
-
-def validate_decimal_input(P):
-    # Allow only empty input (for when the entry is cleared)
+def validate_decimal_input(P): # Allow only empty input (for when the entry is cleared)
     if P == "":
         return True
     try:
@@ -81,11 +79,39 @@ def clear_content(content_frame):
 def show_fuel_overview(content_frame):
     tanking_history = load_tanking_history()
     if tanking_history:
-        last_refuel = tanking_history[-1]
+        if len(tanking_history) > 0 and len(tanking_history)<=2: #return temporary empty records for follwoing functions to work
+            last_refuel = [
+                    {
+                    "Odometer status": 0,
+                    "Fuel type": " ",
+                    "Fuel amount": 0,
+                    "Refuel total price": 0,
+                    "Price per liter": 0,
+                    "Refuel date": " ",
+                    "Tank full": False,
+                    "Gas station": " ",
+                    "Refuel note": "\n"
+                },
+                {
+                "Odometer status": 0,
+                    "Fuel type": " ",
+                    "Fuel amount": 0,
+                    "Refuel total price": 0,
+                    "Price per liter": 0,
+                    "Refuel date": " ",
+                    "Tank full": False,
+                    "Gas station": " ",
+                    "Refuel note": "\n"
+                },
+            ]
+        else:
+            last_refuel = tanking_history[-1]
     else:
         print("No refuel history available")
-    fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
-    fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+
+    # ------------------------ General fuel ovirview widgets -------------------------------------------------------
+    #fuel_header_separator = ttk.Separator(content_frame, orient='horizontal')
+    #fuel_header_separator.grid(row=1, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
 
     last_refuel = tanking_history[-1]
     last_odometer_status = last_refuel["Odometer status"]
@@ -135,13 +161,89 @@ def show_default(content_frame):
     default_fuel_label.grid(row=0, column=0, columnspan=2, sticky = "w")
     show_fuel_overview(content_frame)
 
-    from fuel_statistics import fuel_statistics_window
+    from fuel_statistics import fuel_statistics_window, get_total_fuel_price
 
     show_detail_fuel_statistics_button = tkinter.Button(content_frame, text = "Show detail fuel statistics", command = lambda: fuel_statistics_window(content_frame))
     show_detail_fuel_statistics_button.grid(row = 7, column = 1, pady = 2, padx = 2)
+    
     default_info_separator = ttk.Separator(content_frame, orient='horizontal')
     default_info_separator.grid(row=8, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+    
+    # ------------ costs overview ----------------------------------
+    default_costs_overview_label = tkinter.Label(content_frame, text = "Costs overview", font = FONT_HEADER)
+    default_costs_overview_label.grid(row=9, column=0, columnspan=2, sticky = "w")
 
+    from costs_statistics import calculate_total_costs, calculate_costs_this_year, costs_statistics_window
+
+    total_costs = calculate_total_costs()
+    total_costs_overview_label = tkinter.Label(content_frame, text = "Total costs")
+    total_costs_overview_label.grid(row= 11, column=0, sticky = "w")
+    total_costs_overview_value = tkinter.Label(content_frame, text = f"{total_costs:.2f} CZK")
+    total_costs_overview_value.grid(row= 11, column=1, sticky = "e")
+
+    yearly_costs = calculate_costs_this_year()
+    yearly_costs_overview_label = tkinter.Label(content_frame, text = "Costs this year")
+    yearly_costs_overview_label.grid(row= 12, column=0, sticky = "w")
+    yearly_costs_overview_value = tkinter.Label(content_frame, text = f"{yearly_costs:.2f} CZK")
+    yearly_costs_overview_value.grid(row= 12, column=1, sticky = "e")
+
+    show_detail_costs_statistics_button = tkinter.Button(content_frame, text = "Show detail costs statistics", command = lambda: costs_statistics_window(content_frame))
+    show_detail_costs_statistics_button.grid(row = 13, column = 1, pady = 2, padx = 2)
+
+    below_costs_separator = ttk.Separator(content_frame, orient='horizontal')
+    below_costs_separator.grid(row=14, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
+
+    # --------------------------- Total expenses ---------------------------------------------
+    total_expense = calculate_total_costs() + get_total_fuel_price()
+    total_expenses_label = tkinter.Label(content_frame, text = "Total expenses")
+    total_expenses_label.grid(row=16, column=0, sticky= "w")
+    total_expenses_value = tkinter.Label(content_frame, text = f"{total_expense:.2f} CZK")
+    total_expenses_value.grid(row=16, column=1, sticky="e")
+
+    total_km = odometer_total()
+    total_km_label = tkinter.Label(content_frame, text = "Total kilometers")
+    total_km_label.grid(row=17, column=0, sticky= "w")
+    total_km_value = tkinter.Label(content_frame, text = f"{total_km:.1f} km")
+    total_km_value.grid(row=17, column=1, sticky="e")
+
+    avg_expense_per_km = total_expense/total_km
+    avg_expense_km_label = tkinter.Label(content_frame, text = "Average expense per km")
+    avg_expense_km_label.grid(row=18, column=0, sticky= "w")
+    avg_expense_km_value = tkinter.Label(content_frame, text = f"{avg_expense_per_km:.2f} CZK/km")
+    avg_expense_km_value.grid(row=18, column=1, sticky="e")
+
+    avg_expense_per_month = total_expense/float(get_date_diff_months())
+    avg_expense_per_month_label = tkinter.Label(content_frame, text = "Average expense per month")
+    avg_expense_per_month_label.grid(row=19, column=0, sticky= "w")
+    avg_expense_per_month_value = tkinter.Label(content_frame, text = f"{avg_expense_per_month:.2f} CZK")
+    avg_expense_per_month_value.grid(row=19, column=1, sticky="e")
+
+
+
+
+
+
+# returns total distance
+def odometer_total():
+    tanking_history = load_tanking_history()
+    costs_history = load_costs_history()
+    min_odo_tanking = min(tanking_history, key=lambda x: x["Odometer status"])
+    max_odo_tanking = max(tanking_history, key=lambda x: x["Odometer status"])
+    min_odo_costs = min(costs_history, key=lambda x: x["Odometer status"])
+    max_odo_costs = max(costs_history, key=lambda x: x["Odometer status"])
+
+
+    min_odo = 0
+    max_odo = 0
+
+    min_odo = min(min_odo_tanking["Odometer status"], min_odo_costs["Odometer status"])
+    max_odo = max(max_odo_tanking["Odometer status"], max_odo_costs["Odometer status"])
+    
+    total_km = max_odo - min_odo
+    
+    return total_km
+
+# calculates last consumption on last refuel
 def calcualate_last_consumption():
     tanking_history = load_tanking_history()
     if len(tanking_history) < 2:
@@ -156,6 +258,7 @@ def calcualate_last_consumption():
             last_fuel_consumption = last_refuel["Fuel amount"]/((last_refuel["Odometer status"])-(pre_last_refuel["Odometer status"]))*100
             return last_fuel_consumption
     
+# calculates average consumption on all refuels
 def calculate_avg_consumption():   
     tanking_history = load_tanking_history()
     total_liters = 0
@@ -175,17 +278,52 @@ def calculate_avg_consumption():
     else:
         return 0
     
+# returns last price per liter for fuel
 def get_last_fuel_price():
     tanking_history = load_tanking_history()
     last_refuel_stop = tanking_history[-1]
     last_refuel_price = last_refuel_stop["Price per liter"]
     return last_refuel_price
 
+# calculates difference between two dates
 def get_date_diff(initial_date):
+    
+    
     date_format = "%d.%m.%Y"  # your date format
     initial_date_obj = datetime.strptime(initial_date, date_format).date()  # Convert to date object
     today = datetime.today().date()  # Get today's date
 
     # Calculate the difference
-    date_difference = (today - initial_date_obj).days 
-    return date_difference
+    date_difference_months = (today.month - initial_date_obj.month)
+    date_difference_years = (today.year - initial_date_obj.year)
+    return date_difference_months, date_difference_years
+
+def get_date_diff_months():
+    tanking_history = load_tanking_history()
+    costs_history = load_costs_history()
+
+    # Find the minimum date strings
+    min_date_tanking = min(tanking_history, key=lambda x: x["Refuel date"])["Refuel date"]
+    min_date_costs = min(costs_history, key=lambda x: x["Cost date"])["Cost date"]
+
+    # Convert date strings to date objects
+    date_format = "%d.%m.%Y"
+    min_date_tanking = datetime.strptime(min_date_tanking, date_format).date()
+    min_date_costs = datetime.strptime(min_date_costs, date_format).date()
+
+    # Find the earliest of the two dates
+    min_date = min(min_date_tanking, min_date_costs)
+
+    today = datetime.today().date()  # Get today's date
+
+    # Calculate difference in months and years
+    years_diff = today.year - min_date.year
+    months_diff = today.month - min_date.month
+
+    # Adjust months if necessary
+    if months_diff < 0:
+        years_diff -= 1
+        months_diff += 12
+
+    date_difference_months = years_diff * 12 + months_diff
+    return date_difference_months
