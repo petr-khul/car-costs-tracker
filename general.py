@@ -194,6 +194,9 @@ def show_default(content_frame):
     below_costs_separator.grid(row=14, column=0, columnspan= 2, sticky="ew", padx=5, pady=5)
 
     # --------------------------- Total expenses ---------------------------------------------
+    default_expenses_overview_label = tkinter.Label(content_frame, text = "Total expenses overview", font = FONT_HEADER)
+    default_expenses_overview_label.grid(row=15, column=0, columnspan=2, sticky = "w")
+    
     total_expense = calculate_total_costs() + get_total_fuel_price()
     total_expenses_label = tkinter.Label(content_frame, text = "Total expenses")
     total_expenses_label.grid(row=16, column=0, sticky= "w")
@@ -217,10 +220,6 @@ def show_default(content_frame):
     avg_expense_per_month_label.grid(row=19, column=0, sticky= "w")
     avg_expense_per_month_value = tkinter.Label(content_frame, text = f"{avg_expense_per_month:.2f} CZK")
     avg_expense_per_month_value.grid(row=19, column=1, sticky="e")
-
-
-
-
 
 
 # returns total distance
@@ -286,17 +285,14 @@ def get_last_fuel_price():
     return last_refuel_price
 
 # calculates difference between two dates
-def get_date_diff(initial_date):
-    
-    
+def get_date_diff(initial_date): 
     date_format = "%d.%m.%Y"  # your date format
     initial_date_obj = datetime.strptime(initial_date, date_format).date()  # Convert to date object
     today = datetime.today().date()  # Get today's date
 
     # Calculate the difference
-    date_difference_months = (today.month - initial_date_obj.month)
-    date_difference_years = (today.year - initial_date_obj.year)
-    return date_difference_months, date_difference_years
+    date_difference = (today - initial_date_obj).days
+    return date_difference
 
 def get_date_diff_months():
     tanking_history = load_tanking_history()

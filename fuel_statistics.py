@@ -18,6 +18,7 @@ def get_total_fuel_price():
         total_fuel_costs += record["Refuel total price"]
     return total_fuel_costs
 
+# returns number of refuels stops this year
 def refuel_count_this_year():
     current_year = datetime.now().year
     this_year_refuel_counter = 0
@@ -30,6 +31,7 @@ def refuel_count_this_year():
             this_year_costs += record["Refuel total price"]
     return this_year_refuel_counter, this_year_costs
 
+#reuturns number of refuel stops last year
 def refuel_count_last_year():
     last_year = (datetime.now().year)-1
     last_year_refuel_counter = 0
@@ -42,6 +44,7 @@ def refuel_count_last_year():
             last_year_costs += record["Refuel total price"]
     return last_year_refuel_counter, last_year_costs
 
+# returns number of refuel stops this month
 def refuel_count_this_month():
     current_month = datetime.now().month
     current_year = datetime.now().year
@@ -55,18 +58,21 @@ def refuel_count_this_month():
             this_month_costs += record["Refuel total price"]            
     return this_month_refuel_counter, this_month_costs
 
+#returns number of refuels stops last month
 def refuel_count_last_month():
     last_month = (datetime.now().month)-1
+    current_year = datetime.now().year
     last_month_refuel_counter = 0
     last_month_costs = 0
 
     for record in tanking_history:
         refuel_date = datetime.strptime(record["Refuel date"], "%d.%m.%Y")
-        if refuel_date.month == last_month:
+        if refuel_date.month == last_month and refuel_date.year == current_year:
             last_month_refuel_counter += 1
             last_month_costs += record["Refuel total price"]
     return last_month_refuel_counter, last_month_costs
 
+#returns average fuel price
 def calculate_average_fuel_price():
     total_fuel_price = 0
     total_liters = 0
@@ -78,6 +84,7 @@ def calculate_average_fuel_price():
         total_liters += record["Fuel amount"]
     return total_fuel_price/total_liters
 
+# returns max and min prices and amounts
 def get_max_min_fuel_values():
     max_price_per_liter = float("-inf")
     min_price_per_liter = float("inf")
@@ -103,6 +110,7 @@ def get_max_min_fuel_values():
     
     return max_price_per_liter, min_price_per_liter, max_refuel_amount, min_refuel_amount, max_refuel_price, min_refuel_price
 
+#window to show detail fuel statistics on tkinter widgets
 def fuel_statistics_window(content_frame):
     clear_content(content_frame)
 
