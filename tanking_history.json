@@ -702,5 +702,16 @@
         "Tank full": true,
         "Gas station": "Zastavka",
         "Refuel note": "\n"
+    }, 
+    {
+        "Odometer status": 87629.0,
+        "Fuel type": "Natural 95",
+        "Fuel amount": 37.25,
+        "Refuel total price": 1337.3,
+        "Price per liter": 2.932,
+        "Refuel date": "07.11.2024",
+        "Tank full": true,
+        "Gas station": "Zastavka",
+        "Refuel note": "\n"
     }
 ]
